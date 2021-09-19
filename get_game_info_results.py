@@ -63,3 +63,29 @@ def get_game_result_list(week_num):
     for t in t_list:
         game_result_list.append(get_game_result(t))
     return(game_result_list)
+
+def get_fake_data():
+    """
+    get_fake_data creates a list of 16 GameInfo objects and a corresponding list of GameResults objects.
+
+    :return: a tuple of a list of GameInfo objects and list of GameResults objects
+    """ 
+    # initiate possible values
+    teams = ['HOU', 'CAR', 'JAC', 'ARI', 'NYG', 'ATL', 'DET', 'BAL', 'CLE', 'CHI', 'PIT', 'CIN', 'TEN', 'IND', 'KC', 'LAC', 'NE', 'NO', 'BUF', 'WAS', 'LV', 'MIA', 'DEN', 'NYJ', 'MIN', 'SEA', 'LAR', 'TB', 'SF', 'GB', 'DAL', 'PHI']
+    spreads = list(np.arange(-10, 10, 0.5))
+    over_unders = list(np.arange(33, 53, 0.5))
+    scores = range(14, 42)
+    # generate a full week of fake games
+    fake_games_list = []
+    fake_results_list = []
+    for i in range(16):
+        spread = random.choice(spreads)
+        home_team = random.choice(teams)
+        teams.remove(home_team)
+        away_team = random.choice(teams)
+        teams.remove(away_team)
+        ou = random.choice(over_unders)
+        fake_games_list.append(GameInfo(home_team, away_team, spread, -1 * spread, ou))
+        fake_results_list.append(GameResults(home_team, away_team,
+                                            random.choice(scores), random.choice(scores)))
+    return(fake_games_list, fake_results_list)
