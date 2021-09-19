@@ -89,3 +89,18 @@ def get_fake_data():
         fake_results_list.append(GameResults(home_team, away_team,
                                             random.choice(scores), random.choice(scores)))
     return(fake_games_list, fake_results_list)
+
+
+def get_week_season(dt):
+    """
+    function for returning the week of the NFL season
+    :param dt: datetime object (can change input type if necessary)
+    :return: tuple of (week number, year)
+    """
+    day_of_year = dt.timetuple().tm_yday
+    # 252 was the day of year the season started
+    # handling final weeks of season in 2022
+    if day_of_year < 251:
+        day_of_year += 365
+    week_num = math.ceil((day_of_year - 251) / 7)
+    return((dt.year, week_num))
