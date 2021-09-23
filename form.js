@@ -1,3 +1,12 @@
+// run event listener for when the google sheet is changed (worksheet added or deleted)
+onChange()
+
+// event listener onChange
+function onChange() {
+  getSpreadsheetData();
+  makeOurForm();
+}
+
 function getSpreadsheetData() {
   // This function gives you an array of objects modeling a worksheet's tabular data, where the first items — column headers — become the property names.
   var sheets = SpreadsheetApp.getActiveSpreadsheet().getSheets();
@@ -14,7 +23,7 @@ function getSpreadsheetData() {
 }
 
 function makeOurForm() {
-  var form = FormApp.create('Boyz and jordan pickem v7')
+  var form = FormApp.create('Boyz and jordan pickem v8')
   
   form.setDescription("I spent the week automating this process away. I didn't make this form, this script did. Lemme know if anything is messed up.");
   
