@@ -1,8 +1,4 @@
-// run event listener for when the google sheet is changed (worksheet added or deleted)
-onChange()
-
-// event listener onChange
-function onChange() {
+function runProcess() {
   getSpreadsheetData();
   makeOurForm();
 }
@@ -23,19 +19,17 @@ function getSpreadsheetData() {
 }
 
 function makeOurForm() {
-  var form = FormApp.create('Boyz and jordan pickem v8')
+  var sheets = SpreadsheetApp.getActiveSpreadsheet().getSheets();
+  var sheet_name = sheets[sheets.length - 1].getSheetName();
+  var week_num = sheet_name.charAt(sheet_name.length - 1);
+  var form = FormApp.create('Week ' + week_num + ': Boyz and jordan pickem [21-22]');
   
-  form.setDescription("I spent the week automating this process away. I didn't make this form, this script did. Lemme know if anything is messed up.");
+  //form.setDescription(".");
   
   form.addTextItem().setTitle('Name').setRequired(true);
   form.addTextItem().setTitle('Email').setRequired(true);
   
   getSpreadsheetData().forEach(function (row) {
-    var capitalizedName = row.home_team_name.charAt(0).toUpperCase() + row.home_team_name.slice(1);
-
-    /*form.addSectionHeaderItem()
-      .setTitle(capitalizedName);*/
-
     var item = form.addMultipleChoiceItem();
     if(row.wk_day == 'MON') {
       item.setTitle(row.away_team_name + ' (' + row.away_line + ') @ ' + row.home_team_name + ' [MNF]')
